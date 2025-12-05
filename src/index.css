@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------
+   THEME TOKENS — COLORS, SPACING, RADIUS, SHADOWS
+-------------------------------------------------------- */
+@theme {
+  /* Core brand colors */
+  --color-bg-primary: #0a0a0a;        /* Rich black */
+  --color-bg-secondary: #121212;      /* Dark black */
+
+  /* Accent colors (subtle neon for modern corporate feel) */
+  --color-accent-red: oklch(0.65 0.25 30);
+  --color-accent-pink: oklch(0.75 0.20 330);
+
+  /* Neutral palette */
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-border-light: rgba(255, 255, 255, 0.08);
+
+  /* Spacing scale */
+  --spacing-section: 6rem;
+  --spacing-container: 1.5rem;
+
+  /* Radius scale */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 12px rgba(255, 0, 0, 0.25);
+}
+
+/* -------------------------------------------------------
+   UTILITIES — CUSTOM CLASSES
+-------------------------------------------------------- */
+@layer utilities {
+  /* Subtle grid background */
+  .grid-bg {
+    background-size: 50px 50px;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  }
+
+  /* Modern gradient text (less neon, more corporate) */
+  .accent-text {
+    background: linear-gradient(
+      90deg,
+      var(--color-accent-red),
+      var(--color-accent-pink)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Optional glow (use sparingly for corporate style) */
+  .accent-glow {
+    filter: drop-shadow(var(--shadow-glow));
+  }
+
+  /* Clean gradient border button */
+  .btn-gradient-border {
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(var(--color-bg-primary), var(--color-bg-primary)) padding-box,
+      linear-gradient(45deg, var(--color-accent-red), var(--color-accent-pink)) border-box;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-gradient-border:hover {
+    background:
+      linear-gradient(var(--color-bg-secondary), var(--color-bg-secondary)) padding-box,
+      linear-gradient(45deg, var(--color-accent-red), var(--color-accent-pink)) border-box;
+    transform: translateY(-2px);
+  }
+}
