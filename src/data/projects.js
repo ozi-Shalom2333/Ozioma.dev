@@ -36,7 +36,7 @@ export const projectsData = [
     title: "EV-olutio", 
     category: "UI/UX", 
     tech: ["React", "CSS3"], 
-    desc: "A stylish digital clock with time, date, light/dark themes, animations, and optional ticking sound, built using HTML, CSS, and JavaScript.",
+    desc: "EV-olution is a modern landing page that highlights electric vehicles through immersive visuals, rotating hero messages, and a clean, interactive user experience.",
     image: "/assets/ev.jpg"
   },
    { 
