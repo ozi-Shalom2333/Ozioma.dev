@@ -2,9 +2,10 @@ import { motion } from 'framer-motion'
 import { ClipboardList } from 'lucide-react'
 
 const techStacks = [
-  { category: 'Frontend', tools: ['React', 'TypeScript', 'Next.js', 'Vite', 'Framer Motion', 'Tailwind v4'] },
-  { category: 'Backend / Database', tools: ['Node.js', 'Express', 'Prisma', 'PostgreSQL', 'Firebase / Firestore'] },
-  { category: 'Tooling / DevOps', tools: ['Git', 'Docker', 'Vercel', 'Webpack / Rollup'] },
+  { category: 'Frontend', tools: ['HTML5', 'CSS3', 'JavaScript','React', 'TypeScript', 'Next.js', 'Vite', 'Framer Motion', 'Tailwind v4'] },
+  { category: 'Backend / Database', tools: ['Node.js', 'Firebase / Firestore'] },
+  // , 'Express','MonogoDB' coming soon
+  { category: 'Tooling / DevOps', tools: ['Git & Github', 'NPM/PNPM', 'Vercel', 'Figma', 'Netlify'] },
 ]
 
 export const Skills = () => {
