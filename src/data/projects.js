@@ -205,7 +205,7 @@ export const projectsData = [
 
     screenshots: [
       "/assets/ev.jpg",
-      "/assets/lotus2.png",
+      "/public/assets/lotus.png",
     ],
 
     architecture: {
