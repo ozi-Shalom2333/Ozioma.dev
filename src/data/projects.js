@@ -204,7 +204,7 @@ export const projectsData = [
     github: "https://github.com/ozi-Shalom2333/good",
 
     screenshots: [
-      "/assets/lotus.png",
+      "/assets/ev.jpg",
       "/assets/lotus2.png",
     ],
 
