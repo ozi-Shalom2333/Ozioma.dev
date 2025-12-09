@@ -88,4 +88,34 @@
   from { background-position: 0 0; }
   to { background-position: 40px 40px; }
 }
+.blueprint-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0.05) 0px,
+    rgba(255, 0, 0, 0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}
+.blueprint-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0.05) 0px,
+    rgba(255, 0, 0, 0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}
 
