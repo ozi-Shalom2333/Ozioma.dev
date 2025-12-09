@@ -5,7 +5,38 @@ export const projectsData = [
     category: "Full Stack", 
     tech: ["React", 'CSS3', "MongoDB"], 
     desc: "A fully functional website that connect skilled artisans to potential clients",
-    image: "/assets/artisanaidpic.jpg"
+    image: "/assets/artisanaidpic.jpg",
+    architecture: {
+  overview:
+    "Artisan Aid is a full‑stack platform designed to connect skilled artisans with clients through a searchable, filterable directory. The system prioritizes clarity, speed, and accessibility for non‑technical users.",
+
+  frontend:
+    "The frontend is built with React and Vite for fast development and optimized builds. UI components are handcrafted with CSS3, focusing on simplicity and readability. Client-side routing enables smooth navigation, while React hooks manage local state for search, filtering, and form interactions.",
+
+  backend:
+    "A Node.js backend exposes RESTful endpoints for artisan registration, profile retrieval, and search queries. The API is structured around clean separation of concerns, ensuring predictable request/response cycles.",
+
+  database:
+    "MongoDB stores artisan profiles, categories, and client requests. Text indexes are used to support fast search queries across artisan names, skills, and locations.",
+
+  features: [
+    "Artisan registration and profile creation",
+    "Client search with filters (location, skill, rating)",
+    "Responsive UI for mobile and desktop",
+    "REST API for artisan data retrieval"
+  ],
+
+  challenges: [
+    "Ensuring fast search performance with growing datasets",
+    "Designing a UI that feels intuitive for non‑technical users"
+  ],
+
+  solutions: [
+    "Implemented MongoDB text indexes for optimized search performance",
+    "Used a minimal, accessible layout with clear visual hierarchy"
+  ]
+}
+
   },
   { 
     id: 2, 
@@ -13,7 +44,38 @@ export const projectsData = [
     category: "SaaS", 
     tech: ["React", 'CSS3'], 
     desc: "A user-friendly voting app enabling secure, transparent elections with real-time results and seamless mobile access for all.",
-    image: "/assets/voters.jpg"
+    image: "/assets/voters.jpg",
+    architecture: {
+  overview:
+    "The Voting App is a lightweight, secure voting platform designed for small‑scale elections. It focuses on transparency, ease of use, and real‑time result updates.",
+
+  frontend:
+    "Built with React and CSS3, the UI emphasizes clarity and accessibility. Components are structured around a simple state flow, ensuring predictable user interactions. Animations are minimal to maintain focus on data accuracy.",
+
+  backend:
+    "A Node.js backend handles vote submissions, user validation, and result aggregation. Endpoints are protected against duplicate submissions and malformed requests.",
+
+  database:
+    "Votes and candidate data are stored in a secure database with write‑once constraints to prevent tampering. Aggregation pipelines compute real‑time results.",
+
+  features: [
+    "Secure vote submission",
+    "Real‑time result updates",
+    "Mobile‑friendly UI",
+    "Candidate and voter management"
+  ],
+
+  challenges: [
+    "Preventing duplicate or invalid votes",
+    "Ensuring real‑time updates without overloading the server"
+  ],
+
+  solutions: [
+    "Implemented server‑side validation and IP/session‑based throttling",
+    "Used lightweight polling for real‑time updates"
+  ]
+}
+
   },
   { 
     id: 3, 

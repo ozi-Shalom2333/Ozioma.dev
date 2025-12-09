@@ -1,6 +1,7 @@
 import React from "react"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export const ProjectCard = ({ project, index }) => {
   const ref = React.useRef(null)
@@ -85,7 +86,8 @@ export const ProjectCard = ({ project, index }) => {
         </p>
 
         {/* CTA */}
-        <div
+        <Link
+          to={`/blueprint/${project.id}`}
           className="
             mt-4 flex items-center gap-1 text-sm font-medium
             text-[var(--color-accent-red)]
@@ -95,7 +97,7 @@ export const ProjectCard = ({ project, index }) => {
         >
           View Blueprint
           <ArrowRight className="w-4 h-4" />
-        </div>
+        </Link>
       </div>
     </motion.div>
   )
