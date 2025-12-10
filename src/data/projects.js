@@ -292,7 +292,7 @@ export const projectsData = [
     id: 7, 
     title: "Healthwise-Blog", 
     category: "Web-App", 
-    tech: ["React", "Tailwind V3", "Redux Toolkit"], 
+    tech: ["React", "Tailwind V3", "Redux Toolkit", "Lovable AI"], 
     desc: "HealthWise is a modern, responsive health and wellness blog platform designed to empower users on their journey to better living.",
     image: "/assets/wellness.webp",
 
@@ -326,7 +326,8 @@ export const projectsData = [
 
       challenges: [
         "Managing global state cleanly",
-        "Ensuring fast load times for content-heavy pages"
+        "Ensuring fast load times for content-heavy pages",
+        "Reforming Ai generated code to fit best and mordern practices and tools"
       ],
 
       solutions: [
