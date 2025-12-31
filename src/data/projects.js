@@ -47,54 +47,60 @@ export const projectsData = [
     }
   },
 
-  { 
-    id: 2, 
-    title: "Voting App", 
-    category: "SaaS", 
-    tech: ["React", "CSS3"], 
-    desc: "A user-friendly voting app enabling secure, transparent elections with real-time results and seamless mobile access for all.",
-    image: "/assets/voters.jpg",
-
-    live: "https://oziomavote-app.vercel.app/",
-    github: "https://github.com/ozi-Shalom2333/voteApp",
-
-    screenshots: [
-      "/assets/voters.jpg",
-      "/assets/vote1.jpg"
+  {
+  id: 2,
+  title: "CareTime Dental",
+  category: "WebApp",
+  tech: ["React", "Tailwind CSS", "Framer Motion", "React Icons"],
+  desc: "CareTime Dental is a fully responsive clinic website that highlights services, enables appointment bookings, and shares dental care information. Designed with a focus on user experience and aesthetics, it features smooth animations, intuitive navigation, and modern web development practices.",
+  image: "/assets/dental.jpg",
+  live: "https://clinic-two-mu.vercel.app/",
+  github: "https://github.com/ozi-Shalom2333/clinic",
+  screenshots: [
+    "/assets/dental.jpg",
+    "/assets/dental-service.jpg",
+    "/assets/dental-tips.jpg",
+    "/assets/dental-booking.jpg"
+  ],
+  architecture: {
+    overview: "A modern dental clinic website built with React and Tailwind CSS, featuring a multi-step appointment booking system, interactive service showcases, and animated transitions. The project emphasizes clean design, accessibility, and smooth user interactions across all devices.",
+    
+    frontend: "Built with React 18 using functional components and hooks for state management. Tailwind CSS provides utility-first styling with custom configurations for consistent design tokens. Framer Motion handles all animations including scroll-triggered reveals, hover effects, and page transitions. The component-based architecture ensures reusability and maintainability.",
+    
+    backend: "Currently frontend-only with mock data. Designed for easy backend integration with RESTful APIs for appointment scheduling, user authentication, and patient management. Ready to connect to Node.js, Express, or serverless functions.",
+    
+    database: "No database implemented. Structured to integrate with MongoDB, PostgreSQL, or Firebase for storing appointment data, user information, and service records. Form validation and state management are already in place for seamless backend integration.",
+    
+    features: [
+      "Multi-step appointment booking with form validation",
+      "Interactive service cards with hover animations",
+      "Responsive navigation with mobile menu",
+      "Scroll-triggered animations using Framer Motion",
+      "Dental tips carousel with tab navigation",
+      "Progress indicator for appointment steps",
+      "Accessible design with ARIA labels",
+      "Optimized images with lazy loading",
+      "Gradient backgrounds and modern UI components",
+      "Full mobile responsiveness"
     ],
-
-    architecture: {
-      overview:
-        "The Voting App is a lightweight, secure voting platform designed for small‑scale elections. It focuses on transparency, ease of use, and real‑time result updates.",
-
-      frontend:
-        "Built with React and CSS3, the UI emphasizes clarity and accessibility. Components are structured around a simple state flow, ensuring predictable user interactions. Animations are minimal to maintain focus on data accuracy.",
-
-      backend:
-        "A Node.js backend handles vote submissions, user validation, and result aggregation. Endpoints are protected against duplicate submissions and malformed requests.",
-
-      database:
-        "Votes and candidate data are stored in a secure database with write‑once constraints to prevent tampering. Aggregation pipelines compute real‑time results.",
-
-      features: [
-        "Secure vote submission",
-        "Real‑time result updates",
-        "Mobile‑friendly UI",
-        "Candidate and voter management"
-      ],
-
-      challenges: [
-        "Preventing duplicate or invalid votes",
-        "Ensuring real‑time updates without overloading the server"
-      ],
-
-      solutions: [
-        "Implemented server‑side validation and IP/session‑based throttling",
-        "Used lightweight polling for real‑time updates"
-      ]
-    }
-  },
-
+    
+    challenges: [
+      "Implementing smooth animations without sacrificing performance",
+      "Creating a multi-step form with validation and state persistence",
+      "Ensuring consistent animations across different screen sizes",
+      "Managing complex hover states and transitions",
+      "Building a responsive layout that works on all devices"
+    ],
+    
+    solutions: [
+      "Used Framer Motion's whileInView with once: true for optimized scroll animations",
+      "Implemented React state management with controlled components and validation functions",
+      "Created responsive animation variants that adapt to viewport size",
+      "Utilized Tailwind's responsive utilities and custom breakpoints",
+      "Designed mobile-first with progressive enhancement for larger screens"
+    ]
+  }
+},
   { 
     id: 3, 
     title: "ZURI", 
