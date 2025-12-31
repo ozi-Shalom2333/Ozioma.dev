@@ -303,7 +303,7 @@ export const projectsData = [
     image: "/assets/wellness.webp",
 
     live: "https://healthwise-blog.vercel.app/",
-    github: "https://github.com/ozi-Shalom2333/healthwise_blog",
+    // github: "https://github.com/ozi-Shalom2333/healthwise_blog",
 
     screenshots: [
       "/assets/wellness.webp",
