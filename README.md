@@ -138,7 +138,7 @@ This project is deployed on [Vercel](https://vercel.com) for optimal performance
 
 ## 📧 Contact & Links
 
-- **Portfolio**: [ozioma.dev](https://ozioma.dev)
+- **Portfolio**: [ozioma.dev](https://ozioma-dev.vercel.app/)
 - **GitHub**: [@ozi-Shalom2333](https://github.com/ozi-Shalom2333)
 - **Email**: [Your email]
 
