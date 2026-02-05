@@ -392,58 +392,58 @@ export const projectsData = [
     }
   },
   {
-  id: 9,
-  title: "DNK",
-  category: "WebApp",
-  tech: ["Next.js 16", "React 19", "Tailwind CSS v4", "Framer Motion", "Shadcn", "TypeScript"],
-  desc: "A sleek, performant web application showcasing modern design principles with smooth animations, accessible UI components, and an interactive carousel experience.",
-  image: "/assets/dnk.webp",
-  live: "https://dnk-drab.vercel.app/", 
-  github: "https://github.com/ozi-Shalom2333/dnk",
-  screenshots: [
+  "id": 9,
+  "title": "DNK",
+  "category": "WebApp",
+  "tech": [
+    "Next.js 16",
+    "React 19",
+    "Tailwind CSS v4",
+    "Framer Motion",
+    "Shadcn",
+    "TypeScript",
+    "Firebase",
+    "Sonner",
+    "Embla Carousel"
+  ],
+  "desc": "A sleek, performant web application showcasing modern design principles with smooth animations, accessible UI components, and secure authentication.",
+  "image": "/assets/dnk.webp",
+  "live": "https://dnk-drab.vercel.app/",
+  "github": "https://github.com/ozi-Shalom2333/dnk",
+  "screenshots": [
     "/assets/dnk.webp",
     "/assets/dnk1.webp",
     "/assets/dnk2.webp",
     "/assets/dnk3.webp"
   ],
-  architecture: {
-    overview:
-      "DNK is a modern, high-performance web application built with Next.js 16 and React 19. It demonstrates cutting-edge frontend architecture with a focus on smooth animations, accessible component design, and type-safe development practices.",
-    
-    frontend:
-      "Built with Next.js 16 App Router and React 19, leveraging Server Components for optimal performance. The UI uses Tailwind CSS v4 with the new @import-based configuration for utility-first styling. Framer Motion powers all animations including scroll-triggered reveals, hover effects, and page transitions. Radix UI primitives provide accessible, unstyled base components that are customized with Tailwind. TypeScript ensures full type safety across the codebase.",
-    
-    backend:
-      "Next.js 16 server-side capabilities handle API routes and server actions. The architecture is designed for scalability with clean separation between server and client components. Ready for integration with external APIs or database connections.",
-    
-    database:
-      "No database currently implemented. Structured to easily integrate with PostgreSQL, MongoDB, or Supabase for dynamic content management.",
-    
-    features: [
+  "architecture": {
+    "overview": "DNK is a modern, high-performance web application built with Next.js 16 and React 19. It demonstrates cutting-edge frontend architecture with a focus on smooth animations, accessible component design, and robust authentication integration.",
+    "frontend": "Built with Next.js 16 App Router and React 19, leveraging Server Components for optimal performance. The UI uses Tailwind CSS v4 with the new @import-based configuration and inline theming. Framer Motion powers all animations including scroll-triggered reveals and page transitions. Radix UI primitives (via Shadcn) provide accessible base components, while Embla Carousel drives interactive product displays.",
+    "backend": "Next.js 16 server-side capabilities handle API routes and app logic. Firebase Authentication is integrated to manage secure user sessions and identity providers (Google, GitHub).",
+    "database": "Firebase Authentication currently implemented for user management. The architecture is structured to support further Firebase services (Firestore) or other databases like PostgreSQL for dynamic data.",
+    "features": [
       "Next.js 16 App Router with Server Components",
-      "React 19 with latest features and hooks",
-      "Tailwind CSS v4 with modern configuration",
-      "Framer Motion animations and gestures",
+      "React 19 with latest hooks and optimizations",
+      "Tailwind CSS v4 with modern CSS-first configuration",
+      "Framer Motion animations and gesture interactions",
+      "Firebase Authentication (Email, Google, GitHub)",
       "Accessible Radix UI component primitives",
       "Embla Carousel with autoplay functionality",
+      "Sonner for elegant toast notifications",
       "TypeScript for type-safe development",
-      "Responsive design across all devices",
-      "Lucide React and React Icons integration",
-      "CVA (Class Variance Authority) for component variants"
+      "Responsive design with Dark Mode support"
     ],
-    
-    challenges: [
+    "challenges": [
       "Implementing smooth animations without impacting Core Web Vitals",
       "Configuring Tailwind CSS v4 with new @import syntax",
-      "Ensuring accessibility while maintaining modern design",
-      "Managing component variants consistently across the UI"
+      "Integrating Firebase Auth with Next.js Server Components",
+      "Managing complex state for authentication and UI interactions"
     ],
-    
-    solutions: [
+    "solutions": [
       "Used Framer Motion's optimized animation engine with whileInView for scroll triggers",
       "Adopted Tailwind v4's new CSS-first configuration approach",
-      "Built on Radix UI primitives for WCAG-compliant accessibility",
-      "Implemented CVA pattern with tailwind-merge for predictable variant handling"
+      "Implemented Firebase Auth with React Context for seamless client-side session management",
+      "Utilized Sonner for non-intrusive, accessible user feedback"
     ]
   }
 }
