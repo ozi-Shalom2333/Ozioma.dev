@@ -43,10 +43,10 @@ export const About = () => {
           className="mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2 text-white">
-            <span className="accent-text">/</span> The Thinker
+            <span className="accent-text">/</span> How I Build
           </h2>
           <p className="text-[var(--color-text-muted)] text-lg">
-            My philosophy on building.
+           My engineering approach
           </p>
         </motion.div>
 
@@ -58,18 +58,20 @@ export const About = () => {
           className="space-y-8 text-[var(--color-text-muted)] text-lg leading-relaxed"
         >
           <motion.p variants={itemVariants}>
-            I don’t just write code — I design systems. My work begins with
+            {/* I don’t just write code — I design systems. My work begins with
             understanding the problem deeply, ensuring every decision is rooted
             in clarity and purpose. The <strong>Thinking</strong> informs the
             <strong> Building</strong>.
+             */}
+            I don’t just write code — I build systems designed to solve real problems.
+             Every project begins with <strong>understanding user needs </strong>, <strong>technical constraints </strong>, and <strong>long-term scalability </strong> before writing a single line of code.
+
           </motion.p>
 
           <motion.p variants={itemVariants}>
-            I focus on clean architecture, precise design execution, and
-            performance‑driven development. My expertise lies in the modern
-            React ecosystem, leveraging tools that prioritize speed,
-            maintainability, and developer experience — including Tailwind v4
-            and server‑first patterns.
+            My development process focuses on clarity, maintainability, and performance. I prioritize clean architecture, reusable components, and thoughtful user experience to ensure products remain reliable as they grow.
+
+            Working primarily within the modern React ecosystem, I leverage server-first patterns, API-driven architecture, and performance-focused tooling to create applications that feel fast, intuitive, and production-ready.
           </motion.p>
 
           {/* Principle Card */}

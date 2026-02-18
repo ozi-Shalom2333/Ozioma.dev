@@ -61,9 +61,7 @@ export const Hero = () => {
           variants={itemVariants}
           className="text-xl md:text-3xl mt-4 font-light text-[var(--color-text-muted)]"
         >
-          Frontend{' '}
-          <span className="accent-text font-medium">Engineer</span> &{' '}
-          <span className="italic">Thinker</span>
+          Frontend Engineer building production-ready web applications with React & Next.js.
         </motion.p>
 
         {/* Description */}
@@ -71,9 +69,8 @@ export const Hero = () => {
           variants={itemVariants}
           className="text-base md:text-lg text-[var(--color-text-muted)] mt-6 max-w-2xl mx-auto leading-relaxed"
         >
-          Crafting tailored digital experiences with a focus on clarity,
-          performance, and thoughtful design. Every interface is built with
-          intention — never from a template.
+          I design and develop modern interfaces powered by APIs,
+          AI integrations, and production-ready architecture.
         </motion.p>
 
         {/* CTA Buttons */}
