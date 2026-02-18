@@ -345,49 +345,51 @@ export const projectsData = [
 
   { 
     id: 8, 
-    title: "AI-Powered Travel Planning Assistant", 
+    title: "NomadAI - Smart Travel Planner", 
     category: "SaaS", 
-    tech: ["Next.js 16", "Tailwind V4", "DeepSeek AI"], 
-    desc: "A full-stack AI application where users input a destination and instantly receive a detailed travel guide.",
-    image: "/assets/travel bot.jpg",
+    tech: ["Next.js 16", "Tailwind V4", "DeepSeek AI", "Framer Motion 12", "Unsplash API", "Shadcn"], 
+    desc: "A premium AI travel assistant that generates structured itineraries with live imagery, sharing capabilities, and a print-optimized layout.",
+    image: "/assets/nomad1 (3).webp",
 
     live: "https://nextjsapp-orcin-six.vercel.app/",
     github: "https://github.com/ozi-Shalom2333/nextjsapp",
 
     screenshots: [
-      "/assets/travel bot.jpg",
-      "/assets/bot.jpg",
-      "/assets/bot1.jpg"
+      "/assets/nomad1 (3).webp",
+      "/assets/nomad1 (4).webp",
+      "/assets/nomad1 (1).webp",
+      "/assets/nomad1 (2).webp"
     ],
 
     architecture: {
       overview:
-        "An AI‑powered travel assistant built with Next.js 16 and DeepSeek AI. Users enter a destination and instantly receive a detailed travel guide with attractions, food, timing, tips, and curated imagery.",
+        "NomadAI v2.0 is a server-first AI assistant built with Next.js 16. It leverages DeepSeek AI via OpenRouter for intelligence and Unsplash for high-quality, contextual imagery. The app provides instant, printable, and shareable travel guides.",
 
       frontend:
-        "The UI is built with Next.js App Router and Tailwind v4. Server Components handle data fetching, while Client Components manage user input and animations. The layout emphasizes clarity and fast content delivery.",
+        "The UI features a modern glassmorphic design built with Tailwind v4 and React 19. It uses Framer Motion 12 for spring animations and layout transitions (Shared Layout IDs in the Image Gallery). shadcn/ui components provide a consistent and accessible interface.",
 
       backend:
-        "Next.js server routes handle requests to the DeepSeek AI API. The backend formats prompts, validates user input, and structures the AI response into a clean travel guide.",
+        "Utilizes Next.js App Router API routes to orchestrate concurrent calls to OpenRouter (DeepSeek model) and Unsplash. Implements robust error handling and loading skeletons for a seamless UX during AI generation.",
 
       database:
-        "No persistent database — all responses are generated on demand.",
+        "Stateless architecture – all travel guides are generated in real-time based on live AI data and Unsplash search results.",
 
       features: [
-        "AI‑generated travel guides",
-        "Curated attractions, food, and tips",
-        "Responsive UI with Tailwind v4",
-        "Server-first architecture with Next.js 16"
+        "NomadAI v2.0 Premium Glassmorphic UI",
+        "Live Unsplash Image Gallery with Lightbox",
+        "Social Sharing & Print-Ready Formatting",
+        "Next.js 16 & React 19 (Server Components)",
+        "Advanced Tailwind v4 Styling & Animations"
       ],
 
       challenges: [
-        "Ensuring consistent AI output formatting",
-        "Handling slow or failed API responses gracefully"
+        "Orchestrating concurrent API requests without blocking UI",
+        "Managing complex layout transitions for the dynamic image gallery"
       ],
 
       solutions: [
-        "Implemented structured prompt templates",
-        "Added loading states and fallback UI"
+        "Implemented Promise.all for parallel API calls",
+        "Used Framer Motion's AnimatePresence and layoutId for smooth gallery interactions"
       ]
     }
   },
