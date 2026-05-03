@@ -448,5 +448,51 @@ export const projectsData = [
       "Utilized Sonner for non-intrusive, accessible user feedback"
     ]
   }
+},
+{
+  "id": 10,
+  "title": "Wealthy Solar",
+  "category": "E-commerce",
+  "tech": [
+    "React 19",
+    "Vite",
+    "Tailwind CSS v4",
+    "Motion",
+    "Lucide React"
+  ],
+  "desc": "A high-conversion e-commerce landing page for a solar rechargeable fan, featuring modern animations, responsive layout, and direct WhatsApp integration for instant sales.",
+  "image": "/assets/wealthy-solar (1).jpg",
+  "live": "https://wealthy-solar.vercel.app/", 
+  "github": "https://github.com/ozi-Shalom2333/wealthy-solar",
+  "screenshots": [
+    "/assets/wealthy-solar (1).jpg",
+    "/assets/wealthy-solar (2).jpg",
+    "/assets/wealthy-solar (3).jpg"
+  ],
+  "architecture": {
+    "overview": "Wealthy Solar is a focused, single-page e-commerce landing page built with React 19 and Vite. Designed to maximize conversions, it leverages a clean UI, engaging micro-animations, and direct WhatsApp integration for seamless customer acquisition.",
+    "frontend": "Built with React 19 and Vite for fast performance and instant hot module replacement. Tailwind CSS v4 provides a utility-first, responsive design tailored heavily for mobile-first shoppers. Motion (Framer Motion) is used extensively to drive engaging scroll-triggered reveals and hover interactions. Lucide React supplies clean, consistent iconography throughout the page.",
+    "backend": "Frontend-only architecture. To reduce friction and encourage immediate communication, all customer inquiries and purchases are routed directly to the seller via the WhatsApp API.",
+    "database": "No database. All product data, customer testimonials, and marketing copy are statically embedded within the React components for maximum load speed and simplicity.",
+    "features": [
+      "High-conversion Hero section with direct WhatsApp Call-to-Action",
+      "React 19 with Vite for optimized rendering and fast page loads",
+      "Tailwind CSS v4 for modern, responsive UI design",
+      "Scroll-triggered layout animations using Motion",
+      "Clean, scalable iconography via Lucide React",
+      "Mobile-first design optimized for on-the-go shoppers"
+    ],
+    "challenges": [
+      "Creating a highly engaging, animated UI without sacrificing time-to-interactive",
+      "Ensuring the layout is perfectly optimized for the high volume of mobile traffic typical in e-commerce",
+      "Reducing purchase friction for non-technical users"
+    ],
+    "solutions": [
+      "Used Motion's optimized 'whileInView' with 'once: true' to ensure animations run smoothly and only when necessary",
+      "Adopted a mobile-first Tailwind configuration to guarantee perfect rendering on smaller screens",
+      "Bypassed traditional cart checkout systems in favor of a 1-click WhatsApp integration to close sales faster"
+    ]
+  }
 }
+
 ]
