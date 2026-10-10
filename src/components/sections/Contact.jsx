@@ -1,117 +1,90 @@
-import { useState, useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
-import emailjs from '@emailjs/browser'
-
+import { useRef, useState } from 'react'
+import { ArrowUpRight, Check, Copy, Send } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 import { Textarea } from '../ui/Textarea'
-import { Send } from 'lucide-react'
 
-export const Contact = () => {
+const linkedin = 'https://www.linkedin.com/in/ozioma-okafor-111006329/'
+const contactEmail = import.meta.env.VITE_CONTACT_EMAIL?.trim()
+const emailConfigured = Boolean(import.meta.env.VITE_EMAILJS_SERVICE_ID && import.meta.env.VITE_EMAILJS_TEMPLATE_ID && import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+
+export function Contact() {
   const [status, setStatus] = useState('')
+  const [sending, setSending] = useState(false)
+  const [copied, setCopied] = useState(false)
   const formRef = useRef(null)
-  const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.4 })
+  const requestInFlight = useRef(false)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setStatus('Sending...')
+  const getBrief = () => {
+    const values = new FormData(formRef.current)
+    return `Hello Ozioma,\n\n${String(values.get('message')).trim()}\n\nFrom: ${String(values.get('user_name')).trim()}\nEmail: ${String(values.get('user_email')).trim()}`
+  }
 
+  const copyBrief = async () => {
+    if (!formRef.current.reportValidity()) return
     try {
-      await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
+      await navigator.clipboard.writeText(getBrief())
+      setCopied(true)
+      setStatus('Brief copied. Paste it into a LinkedIn message to start the conversation. Nothing has been sent yet.')
+    } catch {
+      setStatus('Your browser could not copy the brief. You can select the text in the form and send it through LinkedIn instead.')
+    }
+  }
 
-      setStatus('Message Sent! I will be in touch soon.')
+  const handleSubmit = async event => {
+    event.preventDefault()
+    if (requestInFlight.current) return
+    if (!emailConfigured) {
+      if (contactEmail) {
+        window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent('Project inquiry from portfolio')}&body=${encodeURIComponent(getBrief())}`
+        setStatus('Your email app will open with the brief. Review and send it there.')
+      } else {
+        await copyBrief()
+      }
+      return
+    }
+    requestInFlight.current = true
+    setSending(true)
+    setStatus('Sending your message…')
+    try {
+      const { default: emailjs } = await import('@emailjs/browser')
+      await emailjs.sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_ID, formRef.current, { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY })
+      setStatus('Message sent. Thank you for getting in touch.')
       formRef.current.reset()
-    } catch (error) {
-      console.error(error)
-      setStatus('Something went wrong. Please try again.')
+    } catch {
+      setStatus('The message could not be sent. Your brief is still here. Try again or contact me directly on LinkedIn.')
+    } finally {
+      requestInFlight.current = false
+      setSending(false)
     }
   }
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="py-[var(--spacing-section)] px-6 grid-bg bg-[var(--color-bg-primary)]"
-    >
-      <div className="max-w-3xl mx-auto">
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2 text-white">
-            <span className="accent-text">/</span> Contact
-          </h2>
-          <p className="text-lg text-[var(--color-text-muted)]">
-            Ready to start something meaningful? Let’s talk architecture.
-          </p>
-        </motion.div>
-
-        {/* Form */}
-        <motion.form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-          className="
-            space-y-6 p-8 rounded-xl
-            border border-[var(--color-border-light)]
-            bg-[var(--color-bg-secondary)]/60 shadow-soft
-          "
-        >
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-text-muted)] mb-1">
-              Name
-            </label>
-            <Input name="user_name" required />
+    <section tabIndex={-1} id="contact" className="contact" aria-labelledby="contact-title">
+      <div className="page-container contact-layout">
+        <div>
+          <p className="eyebrow text-muted">04 / Start a conversation</p>
+          <h2 id="contact-title" className="section-heading">Have something<br /><span className="serif">in mind?</span></h2>
+          <p className="contact-copy">A website for your business, an interface for your product, or a frontend role on your team. Tell me what you’re working on and where I can help.</p>
+          <div className="contact-links">
+            <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-link">LinkedIn <ArrowUpRight aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+            {contactEmail && <a href={`mailto:${contactEmail}`} className="text-link">Email me <ArrowUpRight aria-hidden="true" /></a>}
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-text-muted)] mb-1">
-              Email
-            </label>
-            <Input type="email" name="user_email" required />
+        </div>
+        <form ref={formRef} onSubmit={handleSubmit} className="contact-form" aria-label="Project inquiry" aria-busy={sending}
+          onChange={() => { if (copied) setCopied(false) }}>
+          <div className="field"><label htmlFor="contact-name">Your name</label><Input id="contact-name" name="user_name" autoComplete="name" placeholder="How should I address you?" maxLength={120} readOnly={sending} required /></div>
+          <div className="field"><label htmlFor="contact-email">Your email</label><Input id="contact-email" type="email" name="user_email" autoComplete="email" placeholder="you@example.com" maxLength={254} readOnly={sending} required /></div>
+          <div className="field"><label htmlFor="contact-message">What are you working on?</label><Textarea id="contact-message" name="message" rows={4} placeholder="A little about your project, needs, or opportunity…" maxLength={5000} readOnly={sending} required /></div>
+          <div className="form-actions">
+            <Button type="submit" disabled={sending}>
+              {emailConfigured ? (sending ? 'Sending…' : 'Send inquiry') : contactEmail ? 'Open email draft' : copied ? 'Brief copied' : 'Copy your brief'}
+              {emailConfigured ? <Send aria-hidden="true" /> : copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+            </Button>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-text-muted)] mb-1">
-              Project Brief
-            </label>
-            <Textarea name="message" rows="4" required />
-          </div>
-
-          <Button
-            type="submit"
-            disabled={status === 'Sending...'}
-            className="w-full flex items-center justify-center gap-2"
-          >
-            {status === 'Sending...' ? 'Sending...' : 'Send Message'}
-            <Send className="w-4 h-4" />
-          </Button>
-
-          {status && (
-            <p
-              className={`
-                text-center mt-4 text-sm font-medium
-                ${status.includes('Sent')
-                  ? 'accent-text'
-                  : 'text-[var(--color-accent-red)]'}
-              `}
-            >
-              {status}
-            </p>
-          )}
-        </motion.form>
+          <p className="form-note">{emailConfigured ? 'Your details are used to respond to your inquiry.' : contactEmail ? 'This opens a draft in your email app. You choose when to send it.' : 'Write your brief, copy it, and send it to me on LinkedIn.'}</p>
+          <p className="form-status" role="status" aria-live="polite" hidden={!status}>{status}</p>
+        </form>
       </div>
     </section>
   )

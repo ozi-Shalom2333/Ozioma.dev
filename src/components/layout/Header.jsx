@@ -1,99 +1,62 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
-import { Link } from 'react-scroll'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
 
-export const Header = () => {
-  const [scrolled, setScrolled] = useState(false)
+const navItems = [
+  { label: 'Work', id: 'projects' },
+  { label: 'About', id: 'about' },
+  { label: 'Capabilities', id: 'skills' },
+  { label: 'Let’s talk', id: 'contact' },
+]
+
+export function Header() {
   const [isOpen, setIsOpen] = useState(false)
-
+  const toggleRef = useRef(null)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const navItems = [
-    { label: 'Projects', id: 'projects' },
-    { label: 'About', id: 'about' },
-    { label: 'Skills', id: 'skills' },
-    { label: 'Contact', id: 'contact' },
-  ]
-
+    if (!isOpen) return
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+        toggleRef.current?.focus()
+      }
+    }
+    const closeOnResize = () => {
+      if (window.innerWidth >= 768) setIsOpen(false)
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    window.addEventListener('resize', closeOnResize)
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape)
+      window.removeEventListener('resize', closeOnResize)
+    }
+  }, [isOpen])
   return (
-    <motion.header
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[var(--color-bg-primary)]/90 backdrop-blur-md border-b border-[var(--color-border-light)] py-4 shadow-soft'
-          : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        
-        {/* Logo */}
-        <Link
-          to="hero"
-          smooth
-          duration={500}
-          className="text-2xl font-semibold tracking-tight cursor-pointer text-white"
-        >
-          Ozioma<span className="accent-text">.dev</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-10">
-          {navItems.map(({ label, id }) => (
-            <Link
-              key={id}
-              to={id}
-              smooth
-              duration={500}
-              className="text-sm text-[var(--color-text-muted)] hover:text-white transition-colors tracking-wide uppercase cursor-pointer"
-            >
-              {label}
+    <header className="site-header">
+      <div className="page-container">
+        <div className="header-inner">
+          <Link to="/#hero" className="wordmark" onClick={() => setIsOpen(false)} aria-label="Ozioma.dev home">
+            Ozioma<span>.dev</span>
+          </Link>
+          <nav className="desktop-nav" aria-label="Main navigation">
+            {navItems.map(({ label, id }) => (
+              <Link key={id} to={`/#${id}`} className={id === 'contact' ? 'nav-contact' : undefined}>
+                {label}{id === 'contact' && <ArrowUpRight size={15} aria-hidden="true" />}
+              </Link>
+            ))}
+          </nav>
+          <button ref={toggleRef} type="button" className="menu-toggle" onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={isOpen} aria-controls="mobile-navigation">
+            {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
+        </div>
+        <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation" hidden={!isOpen}>
+          {navItems.map(({ label, id }, index) => (
+            <Link key={id} to={`/#${id}`} onClick={() => setIsOpen(false)}>
+              {label}<span className="eyebrow" aria-hidden="true">0{index + 1}</span>
             </Link>
           ))}
         </nav>
-
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Navigation Menu"
-          className="md:hidden text-white"
-        >
-          {isOpen ? (
-            <X className="w-6 h-6 text-[var(--color-accent-red)]" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </button>
       </div>
-
-      {/* Mobile Menu */}
-      <motion.nav
-        initial={{ height: 0, opacity: 0 }}
-        animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-        transition={{ duration: 0.25 }}
-        className="md:hidden overflow-hidden bg-[var(--color-bg-primary)]/95 backdrop-blur-sm border-t border-[var(--color-border-light)]"
-      >
-        <div className="flex flex-col px-6 py-4 gap-4">
-          {navItems.map(({ label, id }) => (
-            <Link
-              key={id}
-              to={id}
-              smooth
-              duration={500}
-              onClick={() => setIsOpen(false)}
-              className="py-2 text-lg text-[var(--color-text-muted)] hover:text-white transition-colors border-b border-[var(--color-border-light)] last:border-none cursor-pointer"
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
-      </motion.nav>
-    </motion.header>
+    </header>
   )
 }

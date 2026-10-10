@@ -1,426 +1,122 @@
-import { useParams, Link } from "react-router-dom"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
-import { projectsData } from "../data/projects"
+import { useEffect, useRef, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
+import { portfolioProjects } from '../data/projectPresentation'
+import { NotFound } from './NotFound'
 
-// Motion Variants
-const pageTransition = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
-}
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-}
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } }
-}
-
-export const BlueprintPage = () => {
-  const { id } = useParams()
-  const project = projectsData.find(p => p.id === Number(id))
-
-  const [lightboxOpen, setLightboxOpen] = useState(false)
+function ImageGallery({ project }) {
   const [currentImage, setCurrentImage] = useState(0)
+  const dialogRef = useRef(null)
+  const returnFocusRef = useRef(null)
+  const images = project.screenshots || []
+  const moveImage = delta => setCurrentImage(index => (index + delta + images.length) % images.length)
 
-  const openLightbox = (index) => {
+  useEffect(() => {
+    return () => {
+      // A route change can unmount an open viewer.
+      document.body.classList.remove('viewer-open')
+    }
+  }, [])
+
+  const close = () => dialogRef.current?.close()
+  const open = (index, trigger) => {
     setCurrentImage(index)
-    setLightboxOpen(true)
+    returnFocusRef.current = trigger
+    dialogRef.current.showModal()
+    document.body.classList.add('viewer-open')
+  }
+  const handleClose = () => {
+    document.body.classList.remove('viewer-open')
+    returnFocusRef.current?.focus()
   }
 
-  const closeLightbox = () => setLightboxOpen(false)
-
-  const nextImage = () => {
-    setCurrentImage(prev =>
-      prev === project.screenshots.length - 1 ? 0 : prev + 1
-    )
-  }
-
-  const prevImage = () => {
-    setCurrentImage(prev =>
-      prev === 0 ? project.screenshots.length - 1 : prev - 1
-    )
-  }
-
-  if (!project) {
-    return (
-      <div className="text-center py-20 text-white">
-        Project not found.
-      </div>
-    )
-  }
-
+  if (!images.length) return null
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={pageTransition}
-      className="relative min-h-screen bg-[var(--color-bg-primary)] text-white overflow-hidden"
-    >
-      {/* Animated Grid */}
-      <div className="absolute inset-0 blueprint-grid opacity-20" />
-
-     
-
-      {/* Frame */}
-      <div className="relative z-10 max-w-5xl mx-auto mt-24 mb-20">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="visible"
-          className="
-            border border-[var(--color-accent-red)]
-            rounded-2xl p-10
-            bg-[var(--color-bg-secondary)]/40
-            backdrop-blur-md
-            shadow-[0_0_40px_rgba(255,0,0,0.15)]
-          "
-        >
-          {/* Title */}
-          <motion.h1 variants={fadeIn} className="text-4xl font-bold accent-text">
-            {project.title}
-          </motion.h1>
-
-          {/* Category */}
-          <motion.p variants={fadeIn} className="mt-2 text-[var(--color-text-muted)]">
-            {project.category}
-          </motion.p>
-
-          {/* Tech Stack */}
-          <motion.div variants={fadeIn} className="flex flex-wrap gap-3 mt-6">
-            {project.tech.map(t => (
-              <span
-                key={t}
-                className="
-                  px-3 py-1 rounded-full text-xs
-                  border border-[var(--color-border-light)]
-                  text-[var(--color-text-muted)]
-                "
-              >
-                {t}
-              </span>
-            ))}
-          </motion.div>
-
-          {/* Description */}
-          <motion.p variants={fadeIn} className="mt-8 text-lg leading-relaxed">
-            {project.desc}
-          </motion.p>
-
-          {/* ✅ Architecture Notes */}
-          <motion.div variants={fadeIn} className="mt-10 space-y-10">
-            {project.architecture?.overview && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Overview</h2>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  {project.architecture.overview}
-                </p>
-              </div>
-            )}
-
-            {project.architecture?.frontend && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Frontend</h2>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  {project.architecture.frontend}
-                </p>
-              </div>
-            )}
-
-            {project.architecture?.backend && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Backend</h2>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  {project.architecture.backend}
-                </p>
-              </div>
-            )}
-
-            {project.architecture?.database && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Database</h2>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  {project.architecture.database}
-                </p>
-              </div>
-            )}
-
-            {project.architecture?.features?.length > 0 && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Key Features</h2>
-                <ul className="list-disc pl-6 text-[var(--color-text-muted)] space-y-2">
-                  {project.architecture.features.map((f, i) => (
-                    <li key={i}>{f}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {project.architecture?.challenges?.length > 0 && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Challenges</h2>
-                <ul className="list-disc pl-6 text-[var(--color-text-muted)] space-y-2">
-                  {project.architecture.challenges.map((c, i) => (
-                    <li key={i}>{c}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {project.architecture?.solutions?.length > 0 && (
-              <div>
-                <h2 className="text-xl font-semibold mb-3 accent-text">Solutions</h2>
-                <ul className="list-disc pl-6 text-[var(--color-text-muted)] space-y-2">
-                  {project.architecture.solutions.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </motion.div>
-
-          {/* ✅ SYSTEM DIAGRAM SECTION */}
-          {/* {project.architecture && (
-            <motion.div variants={fadeIn} className="mt-16">
-              <h2 className="text-xl font-semibold mb-6 accent-text">System Diagram</h2>
-
-              <div
-                className="
-                  relative p-10 rounded-2xl
-                  border border-[var(--color-accent-red)]
-                  bg-[var(--color-bg-secondary)]/20
-                  shadow-[0_0_30px_rgba(255,0,0,0.15)]
-                  blueprint-grid
-                "
-              >
-                <div className="absolute inset-0 blueprint-scanlines pointer-events-none rounded-2xl" />
-
-                <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
-
-                  
-                  {project.architecture.frontend && (
-                    <div className="relative">
-                      <div className="
-                        p-4 rounded-xl border border-[var(--color-accent-red)]
-                        bg-[var(--color-bg-secondary)]/40
-                        shadow-[0_0_20px_rgba(255,0,0,0.2)]
-                        font-mono text-sm
-                      ">
-                        FRONTEND
-                      </div>
-                      <div className="hidden sm:block absolute top-1/2 right-[-50%] w-[50%] h-[2px] bg-[var(--color-accent-red)] opacity-60" />
-                    </div>
-                  )}
-
-                  
-                  {project.architecture.backend && (
-                    <div className="relative">
-                      <div className="
-                        p-4 rounded-xl border border-[var(--color-accent-red)]
-                        bg-[var(--color-bg-secondary)]/40
-                        shadow-[0_0_20px_rgba(255,0,0,0.2)]
-                        font-mono text-sm
-                      ">
-                        BACKEND
-                      </div>
-                      <div className="hidden sm:block absolute top-1/2 left-[-50%] w-[50%] h-[2px] bg-[var(--color-accent-red)] opacity-60" />
-                      <div className="hidden sm:block absolute top-1/2 right-[-50%] w-[50%] h-[2px] bg-[var(--color-accent-red)] opacity-60" />
-                    </div>
-                  )}
-
-                
-                  {project.architecture.database && (
-                    <div className="relative">
-                      <div className="
-                        p-4 rounded-xl border border-[var(--color-accent-red)]
-                        bg-[var(--color-bg-secondary)]/40
-                        shadow-[0_0_20px_rgba(255,0,0,0.2)]
-                        font-mono text-sm
-                      ">
-                        DATABASE
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          )} */}
-
-          {/* ✅ Screenshots */}
-          {project.screenshots && project.screenshots.length > 0 && (
-            <motion.div variants={fadeIn} className="mt-12">
-              <h2 className="text-xl font-semibold mb-4 accent-text">Screenshots</h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {project.screenshots.map((src, index) => (
-                  <div
-                    key={index}
-                    className="
-                      relative overflow-hidden rounded-xl
-                      border border-[var(--color-border-light)]
-                      bg-[var(--color-bg-secondary)]/40
-                      group
-                    "
-                  >
-                    <img
-                      src={src}
-                      alt={`${project.title} screenshot ${index + 1}`}
-                      onClick={() => openLightbox(index)}
-                      className="
-                        w-full h-56 object-cover cursor-pointer
-                        transition-transform duration-700
-                        group-hover:scale-105
-                      "
-                    />
-
-                    <div className="
-                      absolute inset-0 bg-black/20 opacity-0
-                      group-hover:opacity-100 transition-opacity duration-300
-                    " />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {/* ✅ Live Demo + GitHub Links */}
-          <motion.div variants={fadeIn} className="mt-12 flex gap-4">
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  px-6 py-3 rounded-md
-                  border border-[var(--color-accent-red)]
-                  text-[var(--color-accent-red)]
-                  hover:bg-[var(--color-accent-red)] hover:text-black
-                  transition-all duration-300
-                  font-medium tracking-wide
-                "
-              >
-                Live Demo
-              </a>
-            )}
-
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  px-6 py-3 rounded-md
-                  border border-[var(--color-border-light)]
-                  text-white
-                  hover:border-[var(--color-accent-red)]
-                  hover:text-[var(--color-accent-red)]
-                  transition-all duration-300
-                  font-medium tracking-wide
-                "
-              >
-                GitHub Repo
-              </a>
-            )}
-             {/* Close Button */}
-            <Link
-              to="/"
-              className="absolute top-6 right-6 text-[var(--color-text-muted)] hover:text-white transition"
-            >
-              ✕ Close
-            </Link>
-          </motion.div>
-        </motion.div>
+    <section className="case-gallery" aria-labelledby="gallery-title">
+      <div className="case-gallery-header"><h2 id="gallery-title">A look inside.</h2><p className="eyebrow text-muted">Select an image to explore</p></div>
+      <div className="gallery-grid">
+        {images.map((src, index) => (
+          <button key={src} className="gallery-button" type="button" onClick={event => open(index, event.currentTarget)} aria-label={`Enlarge ${project.displayTitle} screenshot ${index + 1}`}>
+            <img src={src} alt={`${project.displayTitle} interface, view ${index + 1}`} width="1280" height="600" loading="lazy" decoding="async" />
+            <span className="gallery-caption"><span>View {String(index + 1).padStart(2, '0')}</span><Expand size={14} aria-hidden="true" /></span>
+          </button>
+        ))}
       </div>
-
-      {/* ✅ Lightbox Viewer */}
-      <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="
-              fixed inset-0 z-50 bg-black/80 backdrop-blur-md
-              flex items-center justify-center
-            "
-          >
-            <div className="absolute inset-0 pointer-events-none blueprint-scanlines" />
-
-            <button
-              onClick={closeLightbox}
-              className="
-                absolute top-6 right-6 text-white text-xl
-                hover:text-[var(--color-accent-red)] transition
-              "
-            >
-              ✕
-            </button>
-
-            <motion.div
-              key={currentImage}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              className="
-                relative
-                max-w-[90%] max-h-[80%]
-                p-4
-                rounded-2xl
-                border border-[var(--color-accent-red)]
-                bg-[var(--color-bg-secondary)]/20
-                shadow-[0_0_40px_rgba(255,0,0,0.25)]
-              "
-            >
-              <div className="absolute inset-0 blueprint-grid opacity-10 pointer-events-none" />
-
-              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[var(--color-accent-red)] opacity-70" />
-              <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[var(--color-accent-red)] opacity-70" />
-              <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[var(--color-accent-red)] opacity-70" />
-              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[var(--color-accent-red)] opacity-70" />
-
-              <div className="
-                absolute -top-10 left-1/2 -translate-x-1/2
-                text-xs tracking-widest uppercase
-                text-[var(--color-accent-red)]
-                opacity-80 font-mono
-              ">
-                FIG {currentImage + 1}
-              </div>
-
-              <img
-                src={project.screenshots[currentImage]}
-                alt="Screenshot"
-                className="w-full h-full object-contain rounded-lg"
-              />
-            </motion.div>
-
-            <button
-              onClick={prevImage}
-              className="
-                absolute left-10 text-white text-4xl font-light
-                hover:text-[var(--color-accent-red)]
-                transition drop-shadow-[0_0_10px_rgba(255,0,0,0.4)]
-              "
-            >
-              ‹
-            </button>
-
-            <button
-              onClick={nextImage}
-              className="
-                absolute right-10 text-white text-4xl font-light
-                hover:text-[var(--color-accent-red)]
-                transition drop-shadow-[0_0_10px_rgba(255,0,0,0.4)]
-              "
-            >
-              ›
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      <dialog ref={dialogRef} className="lightbox" aria-labelledby="lightbox-title" onClose={handleClose}
+        onClick={event => { if (event.target === event.currentTarget) close() }}
+        onKeyDown={event => {
+          if (event.key === 'ArrowRight') { event.preventDefault(); moveImage(1) }
+          if (event.key === 'ArrowLeft') { event.preventDefault(); moveImage(-1) }
+        }}>
+        <div className="lightbox-controls">
+          <p id="lightbox-title" aria-live="polite">{project.displayTitle} / {currentImage + 1} of {images.length}</p>
+          {images.length > 1 && <><button type="button" onClick={() => moveImage(-1)} aria-label="Previous screenshot"><ChevronLeft aria-hidden="true" /></button><button type="button" onClick={() => moveImage(1)} aria-label="Next screenshot"><ChevronRight aria-hidden="true" /></button></>}
+          <button type="button" onClick={close} aria-label="Close image viewer" autoFocus><X aria-hidden="true" /></button>
+        </div>
+        <img src={images[currentImage]} alt={`${project.displayTitle} interface, view ${currentImage + 1}`} />
+      </dialog>
+    </section>
   )
 }
+
+export function BlueprintPage() {
+  const { id } = useParams()
+  const project = portfolioProjects.find(item => item.id === Number(id))
+  const headingRef = useRef(null)
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true })
+  }, [id])
+  if (!project) return <NotFound project />
+
+  const notes = project.architecture || {}
+  const nextProject = portfolioProjects[(portfolioProjects.indexOf(project) + 1) % portfolioProjects.length]
+  return (
+    <article className="case-page page-container">
+      <Link to="/#projects" className="case-back"><ArrowLeft size={16} aria-hidden="true" />Back to work</Link>
+      <div className="case-header">
+        <div>
+          <p className="eyebrow text-brand">Project / {String(project.id).padStart(2, '0')}</p>
+          <h1 ref={headingRef} tabIndex={-1} className="case-title">{project.displayTitle}</h1>
+          <p className="case-summary">{project.summary}</p>
+          <div className="hero-actions">
+            {project.live && <a href={project.live} target="_blank" rel="noopener noreferrer" className="button">Explore live site <ArrowUpRight aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>}
+            {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-link">View source <ArrowUpRight aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>}
+          </div>
+        </div>
+        <dl className="case-metadata">
+          <div><dt className="eyebrow">Project type</dt><dd>{project.category}</dd></div>
+          <div><dt className="eyebrow">Frontend work</dt><dd>{project.focus}</dd></div>
+          <div><dt className="eyebrow">Tools used</dt><dd>{project.tech.join(' · ')}</dd></div>
+          {project.note && <div><dt className="eyebrow">Project context</dt><dd>{project.note}</dd></div>}
+        </dl>
+      </div>
+      <div className="case-hero" style={{ '--project-tone': project.tone }}>
+        <img src={project.preview} alt={`${project.displayTitle} website overview`} width="1280" height="600" fetchPriority="high" />
+      </div>
+      <section className="case-content" aria-labelledby="implementation-title">
+        <div><p className="eyebrow text-muted mb-4">Behind the interface</p><h2 id="implementation-title">How it<br /><span className="serif">comes together.</span></h2></div>
+        <div className="case-notes">
+          {[
+            ['Overview', notes.overview],
+            ['Frontend implementation', notes.frontend],
+            ['Services & backend', notes.backend],
+            ['Data', notes.database],
+          ].filter(([, text]) => text).map(([title, text]) => <div className="case-note" key={title}><h3>{title}</h3><p>{text}</p></div>)}
+        </div>
+      </section>
+      {[
+        ['Features', notes.features],
+        ['Challenges', notes.challenges],
+        ['Approach & solutions', notes.solutions],
+      ].filter(([, items]) => items?.length).map(([title, items]) => (
+        <section className="case-content" key={title} aria-label={title}>
+          <h2>{title}</h2><div className="case-notes"><ul>{items.map(item => <li key={item}>{item}</li>)}</ul></div>
+        </section>
+      ))}
+      <ImageGallery key={project.id} project={project} />
+      <div className="case-next"><p className="eyebrow text-muted">Next project</p><Link to={`/blueprint/${nextProject.id}`}>{nextProject.displayTitle}<ArrowRight aria-hidden="true" /></Link></div>
+    </article>
+  )
+}
+
+export default BlueprintPage
