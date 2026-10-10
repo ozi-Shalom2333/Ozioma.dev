@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, Copy, Send } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 import { Textarea } from '../ui/Textarea'
+import { Reveal } from '../shared/Reveal'
 
 const linkedin = 'https://www.linkedin.com/in/ozioma-okafor-111006329/'
 const contactEmail = import.meta.env.VITE_CONTACT_EMAIL?.trim()
@@ -62,7 +63,7 @@ export function Contact() {
   return (
     <section tabIndex={-1} id="contact" className="contact" aria-labelledby="contact-title">
       <div className="page-container contact-layout">
-        <div>
+        <Reveal>
           <p className="eyebrow text-muted">04 / Start a conversation</p>
           <h2 id="contact-title" className="section-heading">Have something<br /><span className="serif">in mind?</span></h2>
           <p className="contact-copy">A website for your business, an interface for your product, or a frontend role on your team. Tell me what you’re working on and where I can help.</p>
@@ -70,8 +71,8 @@ export function Contact() {
             <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-link">LinkedIn <ArrowUpRight aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
             {contactEmail && <a href={`mailto:${contactEmail}`} className="text-link">Email me <ArrowUpRight aria-hidden="true" /></a>}
           </div>
-        </div>
-        <form ref={formRef} onSubmit={handleSubmit} className="contact-form" aria-label="Project inquiry" aria-busy={sending}
+        </Reveal>
+        <Reveal as="form" ref={formRef} onSubmit={handleSubmit} className="contact-form" delay={0.15} aria-label="Project inquiry" aria-busy={sending}
           onChange={() => { if (copied) setCopied(false) }}>
           <div className="field"><label htmlFor="contact-name">Your name</label><Input id="contact-name" name="user_name" autoComplete="name" placeholder="How should I address you?" maxLength={120} readOnly={sending} required /></div>
           <div className="field"><label htmlFor="contact-email">Your email</label><Input id="contact-email" type="email" name="user_email" autoComplete="email" placeholder="you@example.com" maxLength={254} readOnly={sending} required /></div>
@@ -84,7 +85,7 @@ export function Contact() {
           </div>
           <p className="form-note">{emailConfigured ? 'Your details are used to respond to your inquiry.' : contactEmail ? 'This opens a draft in your email app. You choose when to send it.' : 'Write your brief, copy it, and send it to me on LinkedIn.'}</p>
           <p className="form-status" role="status" aria-live="polite" hidden={!status}>{status}</p>
-        </form>
+        </Reveal>
       </div>
     </section>
   )

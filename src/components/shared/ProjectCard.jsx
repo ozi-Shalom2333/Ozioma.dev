@@ -1,5 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { Reveal } from './Reveal'
+import { STAGGER } from '../../lib/motion'
 
 export function ProjectActions({ project }) {
   return (
@@ -13,7 +15,7 @@ export function ProjectActions({ project }) {
 
 export function ProjectCard({ project, index }) {
   return (
-    <article className="project-card">
+    <Reveal as="article" className="project-card" delay={Math.min(index * STAGGER, 0.4)} y={22}>
       <Link to={`/blueprint/${project.id}`} className="project-media" style={{ '--project-tone': project.tone }} aria-label={`Explore ${project.displayTitle}`}>
         <img src={project.preview} srcSet={`${project.previewSmall} 640w, ${project.preview} 1280w`}
           sizes={index === 0 ? '(max-width: 767px) 90vw, 75vw' : '(max-width: 767px) 90vw, 45vw'}
@@ -28,6 +30,6 @@ export function ProjectCard({ project, index }) {
         </div>
         <div><ProjectActions project={project} /><p className="project-category">{project.category}</p></div>
       </div>
-    </article>
+    </Reveal>
   )
 }

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
 import { portfolioProjects } from '../data/projectPresentation'
+import { Reveal } from '../components/shared/Reveal'
+import { STAGGER } from '../lib/motion'
 import { NotFound } from './NotFound'
 
 function ImageGallery({ project }) {
@@ -33,13 +35,13 @@ function ImageGallery({ project }) {
   if (!images.length) return null
   return (
     <section className="case-gallery" aria-labelledby="gallery-title">
-      <div className="case-gallery-header"><h2 id="gallery-title">A look inside.</h2><p className="eyebrow text-muted">Select an image to explore</p></div>
+      <Reveal className="case-gallery-header" as="div"><h2 id="gallery-title">A look inside.</h2><p className="eyebrow text-muted">Select an image to explore</p></Reveal>
       <div className="gallery-grid">
         {images.map((src, index) => (
-          <button key={src} className="gallery-button" type="button" onClick={event => open(index, event.currentTarget)} aria-label={`Enlarge ${project.displayTitle} screenshot ${index + 1}`}>
+          <Reveal as="button" key={src} className="gallery-button" type="button" onClick={event => open(index, event.currentTarget)} delay={Math.min(index * STAGGER, 0.32)} aria-label={`Enlarge ${project.displayTitle} screenshot ${index + 1}`}>
             <img src={src} alt={`${project.displayTitle} interface, view ${index + 1}`} width="1280" height="600" loading="lazy" decoding="async" />
             <span className="gallery-caption"><span>View {String(index + 1).padStart(2, '0')}</span><Expand size={14} aria-hidden="true" /></span>
-          </button>
+          </Reveal>
         ))}
       </div>
       <dialog ref={dialogRef} className="lightbox" aria-labelledby="lightbox-title" onClose={handleClose}
@@ -72,8 +74,8 @@ export function BlueprintPage() {
   const nextProject = portfolioProjects[(portfolioProjects.indexOf(project) + 1) % portfolioProjects.length]
   return (
     <article className="case-page page-container">
-      <Link to="/#projects" className="case-back"><ArrowLeft size={16} aria-hidden="true" />Back to work</Link>
-      <div className="case-header">
+      <Reveal onMount y={8}><Link to="/#projects" className="case-back"><ArrowLeft size={16} aria-hidden="true" />Back to work</Link></Reveal>
+      <Reveal className="case-header" onMount delay={0.05}>
         <div>
           <p className="eyebrow text-brand">Project / {String(project.id).padStart(2, '0')}</p>
           <h1 ref={headingRef} tabIndex={-1} className="case-title">{project.displayTitle}</h1>
@@ -89,11 +91,11 @@ export function BlueprintPage() {
           <div><dt className="eyebrow">Tools used</dt><dd>{project.tech.join(' · ')}</dd></div>
           {project.note && <div><dt className="eyebrow">Project context</dt><dd>{project.note}</dd></div>}
         </dl>
-      </div>
-      <div className="case-hero" style={{ '--project-tone': project.tone }}>
+      </Reveal>
+      <Reveal className="case-hero" onMount delay={0.1} y={24} style={{ '--project-tone': project.tone }}>
         <img src={project.preview} alt={`${project.displayTitle} website overview`} width="1280" height="600" fetchPriority="high" />
-      </div>
-      <section className="case-content" aria-labelledby="implementation-title">
+      </Reveal>
+      <Reveal as="section" className="case-content" aria-labelledby="implementation-title">
         <div><p className="eyebrow text-muted mb-4">Behind the interface</p><h2 id="implementation-title">How it<br /><span className="serif">comes together.</span></h2></div>
         <div className="case-notes">
           {[
@@ -103,18 +105,18 @@ export function BlueprintPage() {
             ['Data', notes.database],
           ].filter(([, text]) => text).map(([title, text]) => <div className="case-note" key={title}><h3>{title}</h3><p>{text}</p></div>)}
         </div>
-      </section>
+      </Reveal>
       {[
         ['Features', notes.features],
         ['Challenges', notes.challenges],
         ['Approach & solutions', notes.solutions],
       ].filter(([, items]) => items?.length).map(([title, items]) => (
-        <section className="case-content" key={title} aria-label={title}>
+        <Reveal as="section" className="case-content" key={title} aria-label={title}>
           <h2>{title}</h2><div className="case-notes"><ul>{items.map(item => <li key={item}>{item}</li>)}</ul></div>
-        </section>
+        </Reveal>
       ))}
       <ImageGallery key={project.id} project={project} />
-      <div className="case-next"><p className="eyebrow text-muted">Next project</p><Link to={`/blueprint/${nextProject.id}`}>{nextProject.displayTitle}<ArrowRight aria-hidden="true" /></Link></div>
+      <Reveal className="case-next"><p className="eyebrow text-muted">Next project</p><Link to={`/blueprint/${nextProject.id}`}>{nextProject.displayTitle}<ArrowRight aria-hidden="true" /></Link></Reveal>
     </article>
   )
 }
