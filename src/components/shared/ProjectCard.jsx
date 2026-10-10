@@ -1,104 +1,33 @@
-import React from "react"
-import { motion, useInView } from "framer-motion"
-import { ArrowRight } from "lucide-react"
-import { Link } from "react-router-dom"
+import { ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-export const ProjectCard = ({ project, index }) => {
-  const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
-
+export function ProjectActions({ project }) {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ delay: index * 0.1, duration: 0.45, ease: "easeOut" }}
-      whileHover={{ y: -6, boxShadow: "0 8px 24px rgba(0,0,0,0.35)" }}
-      className="
-        group relative rounded-xl overflow-hidden cursor-pointer
-        bg-[var(--color-bg-secondary)]/60
-        border border-[var(--color-border-light)]
-        transition-all duration-300 flex flex-col
-      "
-    >
-      {/* Project Image */}
-      <div className="relative h-40 w-full overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="
-            w-full h-full object-cover
-            transition-transform duration-700
-            group-hover:scale-105
-          "
-        />
+    <div className="project-actions">
+      <Link to={`/blueprint/${project.id}`}>Project details <ArrowUpRight aria-hidden="true" /><span className="sr-only"> for {project.displayTitle}</span></Link>
+      {project.live && <a href={project.live} target="_blank" rel="noopener noreferrer">Live site <ArrowUpRight aria-hidden="true" /><span className="sr-only"> for {project.displayTitle} (opens in a new tab)</span></a>}
+      {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Source <ArrowUpRight aria-hidden="true" /><span className="sr-only"> for {project.displayTitle} (opens in a new tab)</span></a>}
+    </div>
+  )
+}
 
-        {/* Subtle overlay */}
-        <div
-          className="
-            absolute inset-0 bg-gradient-to-b
-            from-black/10 to-black/40
-            opacity-70
-          "
-        />
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-grow">
-        {/* Top Row: ID + Tech */}
-        <div className="flex justify-between items-start mb-4">
-          <span className="font-mono text-[var(--color-text-muted)] text-xs tracking-wide">
-            0{project.id}
-          </span>
-
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((t) => (
-              <span
-                key={t}
-                className="
-                  text-[10px] uppercase tracking-wider px-2 py-1 rounded-full
-                  border border-[var(--color-border-light)]
-                  text-[var(--color-text-muted)]
-                  transition-colors duration-300
-                  group-hover:border-white/20
-                "
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+export function ProjectCard({ project, index }) {
+  return (
+    <article className="project-card">
+      <Link to={`/blueprint/${project.id}`} className="project-media" style={{ '--project-tone': project.tone }} aria-label={`Explore ${project.displayTitle}`}>
+        <img src={project.preview} srcSet={`${project.previewSmall} 640w, ${project.preview} 1280w`}
+          sizes={index === 0 ? '(max-width: 767px) 90vw, 75vw' : '(max-width: 767px) 90vw, 45vw'}
+          alt={`${project.displayTitle} website preview`} width="1280" height="600" loading="lazy" decoding="async" />
+        <span className="project-open" aria-hidden="true"><ArrowUpRight size={18} /></span>
+      </Link>
+      <div className="project-information">
+        <div>
+          <h3 className="project-title"><span className="project-number" aria-hidden="true">0{index + 1}</span>{project.displayTitle}</h3>
+          <p className="project-copy">{project.summary}</p>
+          <p className="project-tech">{project.tech.slice(0, 3).map(tech => <span key={tech}>{tech}</span>)}</p>
         </div>
-
-        {/* Title */}
-        <h3
-          className="
-            text-xl font-medium text-white
-            group-hover:text-[var(--color-accent-red)]
-            transition-colors duration-300
-          "
-        >
-          {project.title}
-        </h3>
-
-        {/* Description */}
-        <p className="text-sm text-[var(--color-text-muted)] mt-2 line-clamp-2">
-          {project.desc}
-        </p>
-
-        {/* CTA */}
-        <Link
-          to={`/blueprint/${project.id}`}
-          className="
-            mt-4 flex items-center gap-1 text-sm font-medium
-            text-[var(--color-accent-red)]
-            transition-transform duration-300
-            group-hover:translate-x-1
-          "
-        >
-          View Blueprint
-          <ArrowRight className="w-4 h-4" />
-        </Link>
+        <div><ProjectActions project={project} /><p className="project-category">{project.category}</p></div>
       </div>
-    </motion.div>
+    </article>
   )
 }

@@ -1,94 +1,34 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 
-/* Motion Variants */
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      duration: 0.6,
-      ease: 'easeOut',
-    },
-  },
-}
+const principles = [
+  ['Understand first.', 'Start with the people using the product, the problem it solves, and the constraints that shape it.'],
+  ['Build with clarity.', 'Keep components focused, interactions understandable, and the code practical to maintain.'],
+  ['Care for the details.', 'Make time for the small screens, loading states, keyboard interactions, and finishing touches.'],
+]
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-}
-
-export const About = () => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.4 })
-
+export function About() {
   return (
-    <section
-      ref={ref}
-      id="about"
-      className="py-[var(--spacing-section)] px-6 grid-bg bg-[var(--color-bg-primary)]"
-    >
-      <div className="max-w-4xl mx-auto">
-        
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2 text-white">
-            <span className="accent-text">/</span> How I Build
-          </h2>
-          <p className="text-[var(--color-text-muted)] text-lg">
-           My engineering approach
-          </p>
-        </motion.div>
-
-        {/* Content */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={containerVariants}
-          className="space-y-8 text-[var(--color-text-muted)] text-lg leading-relaxed"
-        >
-          <motion.p variants={itemVariants}>
-            {/* I don’t just write code — I design systems. My work begins with
-            understanding the problem deeply, ensuring every decision is rooted
-            in clarity and purpose. The <strong>Thinking</strong> informs the
-            <strong> Building</strong>.
-             */}
-            I don’t just write code — I build systems designed to solve real problems.
-             Every project begins with <strong>understanding user needs </strong>, <strong>technical constraints </strong>, and <strong>long-term scalability </strong> before writing a single line of code.
-
-          </motion.p>
-
-          <motion.p variants={itemVariants}>
-            My development process focuses on clarity, maintainability, and performance. I prioritize clean architecture, reusable components, and thoughtful user experience to ensure products remain reliable as they grow.
-
-            Working primarily within the modern React ecosystem, I leverage server-first patterns, API-driven architecture, and performance-focused tooling to create applications that feel fast, intuitive, and production-ready.
-          </motion.p>
-
-          {/* Principle Card */}
-          <motion.div
-            variants={itemVariants}
-            className="p-6 rounded-xl border border-[var(--color-border-light)] bg-[var(--color-bg-secondary)]/60 shadow-soft"
-          >
-            <h3 className="text-xl font-medium mb-2 accent-text">
-              Core Principle: Precision
-            </h3>
-            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-              Every pixel, every state change, and every millisecond of load
-              time is intentional. Precision isn’t an aesthetic choice — it’s a
-              foundation for building software that feels effortless to use.
-            </p>
-          </motion.div>
-        </motion.div>
+    <section tabIndex={-1} id="about" className="about page-container" aria-labelledby="about-title">
+      <div className="about-grid">
+        <div>
+          <p className="eyebrow">02 / A little about me</p>
+          <h2 id="about-title" className="section-heading">An eye for design.<br /><span className="serif">A mind for systems.</span></h2>
+        </div>
+        <div className="about-copy">
+          <p>I’m Ozioma Okafor, a frontend engineer who enjoys the point where design becomes something you can use. My work spans business websites, product interfaces, and applications connected to APIs.</p>
+          <p>I work primarily with React and Next.js. I care about clear structure, reusable components, and experiences that make sense on a small screen as much as a large one.</p>
+          <p>My approach is straightforward: understand the need, choose tools that fit, and refine the details that help people find their way.</p>
+          <a className="text-link" href="https://github.com/ozi-Shalom2333" target="_blank" rel="noopener noreferrer">
+            See how I build on GitHub <ArrowUpRight aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+      <div className="principles">
+        {principles.map(([title, description], index) => (
+          <div className="principle" key={title}>
+            <span className="eyebrow">0{index + 1}</span><h3>{title}</h3><p>{description}</p>
+          </div>
+        ))}
       </div>
     </section>
   )

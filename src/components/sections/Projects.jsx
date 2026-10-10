@@ -1,41 +1,27 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { projectsData } from './../../data/projects'
-import { ProjectCard } from '../shared/ProjectCard'
+import { Plus } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { featuredProjects, archivedProjects } from '../../data/projectPresentation'
+import { ProjectCard, ProjectActions } from '../shared/ProjectCard'
 
-export const Projects = () => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.4 })
-
+export function Projects() {
   return (
-    <section
-      id="projects"
-      className="py-[var(--spacing-section)] px-6 bg-[var(--color-bg-primary)] border-y border-[var(--color-border-light)] grid-bg"
-    >
-      <div className="max-w-6xl mx-auto">
-
-        {/* Section Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-2 text-white">
-            <span className="accent-text">/</span> Blueprints
-          </h2>
-          <p className="text-lg text-[var(--color-text-muted)] max-w-xl">
-            A selection of projects where performance meets purposeful design.
-          </p>
-        </motion.div>
-
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {projectsData.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
+    <section tabIndex={-1} id="projects" className="work" aria-labelledby="work-title">
+      <div className="page-container">
+        <div className="section-intro">
+          <div><p className="eyebrow">01 / Selected work</p><h2 id="work-title" className="section-heading">Ideas, brought<br /><span className="serif">into focus.</span></h2></div>
+          <p className="work-intro-copy">A selection of websites and applications, with a look at the interfaces, the decisions behind them, and the code.</p>
         </div>
+        <div className="project-grid">{featuredProjects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</div>
+        <details className="work-archive">
+          <summary><span>More work & experiments <small>{archivedProjects.length} projects in the archive</small></span><Plus size={22} aria-hidden="true" /></summary>
+          <div>{archivedProjects.map((project, index) => (
+            <article key={project.id} className="archive-item">
+              <span className="project-number" aria-hidden="true">{String(index + 5).padStart(2, '0')}</span>
+              <div><h3 className="archive-title"><Link to={`/blueprint/${project.id}`}>{project.displayTitle}</Link></h3><p>{project.summary}</p></div>
+              <ProjectActions project={project} />
+            </article>
+          ))}</div>
+        </details>
       </div>
     </section>
   )

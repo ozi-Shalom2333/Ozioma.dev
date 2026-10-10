@@ -123,7 +123,7 @@ export const projectsData = [
         "ZURI is a modern fashion e‑commerce experience showcasing African prints through a clean, editorial layout. The system emphasizes visual storytelling and smooth browsing.",
 
       frontend:
-        "The frontend is built with React and CSS3, focusing on responsive grid layouts and high‑quality imagery. Components are optimized for fast rendering, and transitions are used to create a premium browsing experience.",
+        "The supplied project stack lists HTML5 and CSS3. The interface focuses on responsive grid layouts, product imagery, and an editorial browsing experience.",
 
       backend:
         "A lightweight mock API powers product listings and category filtering. The architecture is intentionally simple to prioritize UI performance.",
@@ -211,7 +211,7 @@ export const projectsData = [
 
     screenshots: [
       "/assets/ev.jpg",
-      "/public/assets/lotus.png",
+      "/assets/lotus.png",
     ],
 
     architecture: {
@@ -460,7 +460,7 @@ export const projectsData = [
     "Motion",
     "Lucide React"
   ],
-  "desc": "A high-conversion e-commerce landing page for a solar rechargeable fan, featuring modern animations, responsive layout, and direct WhatsApp integration for instant sales.",
+  "desc": "A product landing page for a solar rechargeable fan, featuring modern animations, responsive layout, and direct WhatsApp integration for instant sales.",
   "image": "/assets/wealthy-solar (1).jpg",
   "live": "https://wealthy-solar.vercel.app/", 
   "github": "https://github.com/ozi-Shalom2333/wealthy-solar",
@@ -470,12 +470,12 @@ export const projectsData = [
     "/assets/wealthy-solar (3).jpg"
   ],
   "architecture": {
-    "overview": "Wealthy Solar is a focused, single-page e-commerce landing page built with React 19 and Vite. Designed to maximize conversions, it leverages a clean UI, engaging micro-animations, and direct WhatsApp integration for seamless customer acquisition.",
+    "overview": "Wealthy Solar is a focused, single-page e-commerce landing page built with React 19 and Vite. It uses a focused UI, small animations, and direct WhatsApp contact for product inquiries.",
     "frontend": "Built with React 19 and Vite for fast performance and instant hot module replacement. Tailwind CSS v4 provides a utility-first, responsive design tailored heavily for mobile-first shoppers. Motion (Framer Motion) is used extensively to drive engaging scroll-triggered reveals and hover interactions. Lucide React supplies clean, consistent iconography throughout the page.",
     "backend": "Frontend-only architecture. To reduce friction and encourage immediate communication, all customer inquiries and purchases are routed directly to the seller via the WhatsApp API.",
     "database": "No database. All product data, customer testimonials, and marketing copy are statically embedded within the React components for maximum load speed and simplicity.",
     "features": [
-      "High-conversion Hero section with direct WhatsApp Call-to-Action",
+      "Hero section with a direct WhatsApp call to action",
       "React 19 with Vite for optimized rendering and fast page loads",
       "Tailwind CSS v4 for modern, responsive UI design",
       "Scroll-triggered layout animations using Motion",
@@ -490,7 +490,7 @@ export const projectsData = [
     "solutions": [
       "Used Motion's optimized 'whileInView' with 'once: true' to ensure animations run smoothly and only when necessary",
       "Adopted a mobile-first Tailwind configuration to guarantee perfect rendering on smaller screens",
-      "Bypassed traditional cart checkout systems in favor of a 1-click WhatsApp integration to close sales faster"
+      "Used direct WhatsApp contact in place of a cart checkout for product inquiries"
     ]
   }
 }
