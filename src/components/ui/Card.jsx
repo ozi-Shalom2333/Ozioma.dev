@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils'
-import { motion } from 'framer-motion'
+import { motion as Motion } from 'framer-motion'
 import { forwardRef } from 'react'
 
 const Card = forwardRef(({ className, children, ...props }, ref) => (
-  <motion.div
+  <Motion.div
     ref={ref}
     initial={{ opacity: 0, y: 20 }}
     whileHover={{ y: -4 }}
@@ -20,7 +20,7 @@ const Card = forwardRef(({ className, children, ...props }, ref) => (
     {...props}
   >
     {children}
-  </motion.div>
+  </Motion.div>
 ))
 
 Card.displayName = 'Card'
