@@ -5,14 +5,15 @@ export const projectsData = [
     category: "Full Stack", 
     tech: ["React", "CSS3", "MongoDB"], 
     desc: "A fully functional website that connects skilled artisans to potential clients.",
-    image: "/assets/artisanaidpic.jpg",
+    image: "/assets/artisan-sample1.jpg",
 
     live: "https://artisian-aid.vercel.app/",
     github: "https://github.com/ozi-Shalom2333/artisian-aid",
 
     screenshots: [
-      "/assets/aid2.jpg",
-      "/assets/aid1.jpg",
+      "/assets/artisan-sample1.jpg",
+      "/assets/artisan-sample2.jpg",
+      "/assets/artisan-sample3.jpg",
     ],
 
     architecture: {
